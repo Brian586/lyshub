@@ -13,7 +13,7 @@
   <!-- About page -->
   <url>
     <loc>https://lyshub.com/about-us.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -21,7 +21,7 @@
   <!-- Services page -->
   <url>
     <loc>https://lyshub.com/services.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -29,7 +29,7 @@
   <!-- Projects page -->
   <url>
     <loc>https://lyshub.com/projects.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -37,7 +37,7 @@
   <!-- Blog page -->
   <url>
     <loc>https://lyshub.com/faqs.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -45,7 +45,7 @@
   <!-- Contact page -->
   <url>
     <loc>https://lyshub.com/contact.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
