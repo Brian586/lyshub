@@ -1,48 +1,39 @@
 import services from "./data/services-data.js";
 
+const ARROW = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+
+function serviceCard(service, index) {
+    const item = document.createElement("article");
+    item.className = "service-card";
+    item.setAttribute("data-reveal", "");
+    item.setAttribute("data-reveal-delay", String((index % 3) * 120));
+
+    item.innerHTML = `
+        <div class="media">
+            <img src="${service.imageUrl}" alt="${service.title}" loading="lazy" width="520" height="325">
+            <span class="badge"><img src="${service.iconUrl}" alt="" aria-hidden="true"></span>
+        </div>
+        <div class="body">
+            <h3><a href="services.html#service-${service.id}">${service.title}</a></h3>
+            <p>${service.shortDescription}</p>
+            <ul class="card-list">
+                ${service.list.map((entry) => `<li>${entry}</li>`).join("")}
+            </ul>
+            <a class="link-arrow" href="services.html#service-${service.id}">Learn More ${ARROW}</a>
+        </div>
+    `;
+
+    return item;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Services Section
-    const servicesList = document.getElementById("services-list");
+    const list = document.getElementById("services-list");
+    if (!list) return;
 
-    services.forEach((service) => {
+    const limit = parseInt(list.getAttribute("data-limit") || "0", 10);
+    const shown = limit > 0 ? services.slice(0, limit) : services;
 
-        const serviceItem = document.createElement("div");
-        serviceItem.className = "col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12";
-        serviceItem.innerHTML = `
-            <div class="service_box style_two dark_color">
-                <div class="service_content_two">
-                    <div class="content_inner"
-                        style="background-image:url(${service.imageUrl});">
-                        <div class="content_inner_in">
-                        <div class="icon_image">
-                            <img src="${service.iconUrl}" class="img-fluid" alt="${service.title} Image">
-                        </div>
-                        <h2>
-                            <a href="#">${service.title}</a>
-                        </h2>
-                        <p>${service.shortDescription}</p>
-                        <ul>
-                            ${service.list.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                        </div>
-                    </div>
-                    <div class="ovarlay_link">
-                        <a href="#">
-                        <i class="icon-right-arrow"></i>
-                        </a>
-                    </div>
-                    <div class="overlay_content">
-                        <h2>
-                        <a href="#">${service.title}</a>
-                        </h2>
-                        <p>${service.shortDescription}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="mr_bottom_20"></div>
-        `;
-        servicesList.appendChild(serviceItem);
-    });
-    // Services Section
+    shown.forEach((service, index) => list.appendChild(serviceCard(service, index)));
+
+    document.dispatchEvent(new CustomEvent("lyshub:rendered", { detail: { list } }));
 });
