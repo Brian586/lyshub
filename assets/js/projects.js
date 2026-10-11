@@ -1,4 +1,5 @@
-import projects from "./data/projects-data.js";
+import { loadProjects } from "./projects-source.js";
+import { escapeHtml } from "./text.js";
 
 const ARROW = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
 
@@ -17,8 +18,10 @@ function categoriesFor(project) {
     return categories.length ? categories.join(" ") : "apps";
 }
 
-function projectCard(project, index) {
-    const url = `project-details.html?projectId=${project.id}`;
+function projectCard(raw, index) {
+    /* Firestore text comes from the admin portal: escape it all before it meets innerHTML. */
+    const project = Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, typeof v === "string" && k !== "image" ? escapeHtml(v) : v]));
+    const url = `project-details.html?projectId=${encodeURIComponent(raw.id)}`;
     const item = document.createElement("article");
     item.className = "project-card";
     item.setAttribute("data-category", categoriesFor(project));
@@ -44,18 +47,22 @@ function projectCard(project, index) {
             </div>
         </div>
         <div class="media">
-            <img src="${project.image}" alt="${project.title}" loading="lazy" width="740" height="494">
+            <img src="${escapeHtml(raw.image)}" alt="${project.title}" loading="lazy" width="740" height="494">
         </div>
     `;
 
     return item;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const list = document.getElementById("projects-list");
     if (!list) return;
 
-    let pool = projects;
+    list.setAttribute("aria-busy", "true");
+    list.innerHTML = `<div class="empty-note"><p class="mb-0">Loading projects…</p></div>`;
+    let pool = await loadProjects();
+    list.removeAttribute("aria-busy");
+    list.innerHTML = "";
 
     /* On a project detail page, don't list the project the visitor is already reading. */
     if (list.hasAttribute("data-exclude-current")) {

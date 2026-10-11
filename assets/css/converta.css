@@ -2279,3 +2279,117 @@ textarea {
       text-align: center;
    }
 }
+
+/* ---------- Project media kit (flyers & videos from /admin) ---------- */
+.project-media {
+   margin-top: 70px;
+}
+
+.project-media:empty {
+   display: none;
+}
+
+.media-kit {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+   gap: 30px;
+}
+
+.media-card {
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
+   background: #fff;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+}
+
+.media-stage {
+   position: relative;
+   aspect-ratio: var(--ratio, 4 / 5);
+   max-height: 560px;
+   background: var(--bg-dark);
+   display: grid;
+   place-items: center;
+   overflow: hidden;
+}
+
+.media-stage img,
+.media-stage video {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+   display: block;
+}
+
+.media-stage > img[aria-hidden] {
+   position: absolute;
+   inset: 0;
+   object-fit: cover;
+}
+
+.media-open {
+   position: absolute;
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   padding: 12px 22px;
+   border: 0;
+   border-radius: var(--radius-pill);
+   background: rgba(18, 2, 47, .78);
+   color: #fff;
+   font-weight: 600;
+   font-size: 15px;
+   backdrop-filter: blur(6px);
+   transition: background .3s var(--ease);
+}
+
+.media-open:hover {
+   background: var(--primary);
+}
+
+.media-open svg {
+   width: 18px;
+   height: 18px;
+}
+
+.media-body {
+   padding: 24px 26px 28px;
+}
+
+.media-body h3 {
+   font-size: 20px;
+   margin-bottom: 14px;
+}
+
+.media-sizes {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+}
+
+.media-sizes button {
+   padding: 6px 14px;
+   border-radius: var(--radius-pill);
+   border: 1px solid var(--border);
+   background: #fff;
+   color: var(--text-heading);
+   font-size: 13px;
+   font-weight: 500;
+   min-height: 34px;
+}
+
+.media-sizes button.active {
+   background: var(--primary);
+   border-color: var(--primary);
+   color: #fff;
+}
+
+.media-note {
+   font-size: 13px;
+   margin: 12px 0 0;
+}
+
+.media-actions:not(:empty) {
+   margin-top: 16px;
+}
