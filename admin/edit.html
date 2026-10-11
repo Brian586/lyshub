@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+   <meta name="robots" content="noindex, nofollow">
+   <title>Edit project | Lyshub Admin</title>
+   <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+   <link rel="stylesheet" href="../assets/css/converta.css">
+   <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin">
+   <header class="admin-bar">
+      <div class="container">
+         <a href="index.html"><img src="../assets/images/logo-default.png" alt="Lyshub Technologies"></a>
+         <span class="admin-title">Projects admin</span>
+         <span class="spacer"></span>
+         <a class="link-btn" href="index.html">All projects</a>
+         <span class="who" data-state="app" hidden data-user-email></span>
+         <button class="btn btn-sm btn-outline" type="button" data-state="app" hidden data-signout>Sign out</button>
+      </div>
+   </header>
+
+   <main class="admin-main">
+      <div class="container">
+
+         <div data-state="loading">
+            <div class="skeleton" style="height:420px"></div>
+         </div>
+
+         <div data-state="app" hidden>
+            <div class="admin-head">
+               <div>
+                  <h1 id="edit-heading">New project</h1>
+                  <p id="edit-sub">Fill in the details and save. You can add flyers and videos once it's saved.</p>
+               </div>
+               <div class="actions">
+                  <a class="btn btn-outline" id="view-live" href="#" target="_blank" rel="noopener" hidden>View on site</a>
+               </div>
+            </div>
+
+            <div class="empty-note" id="load-error" hidden>
+               <h3>Couldn't open this project</h3>
+               <p id="load-error-text"></p>
+               <a class="btn btn-sm" href="index.html">Back to projects</a>
+            </div>
+
+            <form id="project-form" class="edit-grid" novalidate>
+               <div>
+                  <section class="panel">
+                     <h2>Details</h2>
+                     <p>What visitors read on the Projects page and the project's own page.</p>
+                     <div class="field">
+                        <label for="f-title">Title</label>
+                        <input id="f-title" name="title" type="text" placeholder="Kodi" required maxlength="80">
+                     </div>
+                     <div class="field">
+                        <label for="f-id">Page address</label>
+                        <input id="f-id" name="id" type="text" placeholder="kodi" pattern="[a-z0-9-]+" maxlength="60">
+                        <p class="hint">lyshub.com/project-details.html?projectId=<strong id="id-preview">…</strong>. Set once, when the project is created.</p>
+                     </div>
+                     <div class="field-row">
+                        <div class="field">
+                           <label for="f-tag">Category</label>
+                           <input id="f-tag" name="tag" type="text" list="tag-options" placeholder="Software Product · App & Web">
+                           <datalist id="tag-options">
+                              <option value="App & Web Development">
+                              <option value="Mobile App Development">
+                              <option value="Web Development">
+                              <option value="Software Product · App & Web">
+                           </datalist>
+                           <p class="hint">“App” and “Web” in the name drive the Apps / Websites filters.</p>
+                        </div>
+                        <div class="field">
+                           <label for="f-client">Client</label>
+                           <input id="f-client" name="client" type="text" placeholder="Our own product">
+                        </div>
+                     </div>
+                     <div class="field-row">
+                        <div class="field">
+                           <label for="f-location">Location</label>
+                           <input id="f-location" name="location" type="text" placeholder="Mombasa, Kenya">
+                        </div>
+                        <div class="field">
+                           <label for="f-website">Website</label>
+                           <input id="f-website" name="website" type="text" placeholder="lyshub.com">
+                        </div>
+                     </div>
+                     <div class="field">
+                        <label for="f-short">Short description</label>
+                        <textarea id="f-short" name="shortDescription" maxlength="240" style="min-height:96px"
+                           placeholder="One or two sentences for the project card."></textarea>
+                        <p class="hint"><span id="short-count">0</span>/240</p>
+                     </div>
+                     <div class="field">
+                        <label for="f-desc">Full description</label>
+                        <textarea id="f-desc" name="description" style="min-height:260px"
+                           placeholder="What it is, who it is for, what it does."></textarea>
+                        <p class="hint">Leave a blank line between paragraphs. Wrap words in **double stars** to make them bold.</p>
+                     </div>
+                  </section>
+
+                  <section class="panel" id="media-panel">
+                     <h2>Flyers &amp; videos</h2>
+                     <p>Upload every size of each piece (4:5 post, 9:16 story, 1:1 square, 16:9 video…). Files with the
+                        same title appear as one card with a button per size. Videos: use the “-web” export (720p).</p>
+                     <label class="dropzone" id="dropzone" aria-disabled="true">
+                        <input type="file" id="media-input" accept="image/*,video/mp4,video/webm" multiple hidden disabled>
+                        <strong>Drop files here or tap to choose</strong><br>
+                        <span id="drop-hint">Save the project first.</span>
+                     </label>
+                     <div class="media-rows" id="media-rows" aria-live="polite"></div>
+                  </section>
+               </div>
+
+               <aside class="sticky-save">
+                  <section class="panel">
+                     <h2>Publish</h2>
+                     <div class="field">
+                        <label class="switch"><input type="checkbox" name="published" id="f-published"> Show on the website</label>
+                     </div>
+                     <div class="field-row">
+                        <div class="field">
+                           <label for="f-order">Order</label>
+                           <input id="f-order" name="order" type="number" min="1" step="1" placeholder="1">
+                        </div>
+                        <div class="field">
+                           <label for="f-date">Date shown</label>
+                           <input id="f-date" name="date" type="text" placeholder="October 11, 2026">
+                        </div>
+                     </div>
+                     <button class="btn btn-block" type="submit" id="save-btn">Save project</button>
+                     <p class="form-status" id="save-status" role="status"></p>
+                  </section>
+                  <section class="panel">
+                     <h2>Cover image</h2>
+                     <p>Shown on the project card and at the top of its page. Landscape, about 3:2.</p>
+                     <div class="cover-preview" id="cover-preview"><span>No cover yet</span></div>
+                     <label class="btn btn-sm btn-outline" for="cover-input">Choose image</label>
+                     <input type="file" id="cover-input" accept="image/*" hidden>
+                     <p class="form-note" id="cover-note"></p>
+                  </section>
+               </aside>
+            </form>
+         </div>
+      </div>
+   </main>
+
+   <script type="module" src="js/edit.js"></script>
+</body>
+
+</html>
